@@ -3,6 +3,7 @@ This is the 1st version of telemedicine service prototype.
 【学習用データセット】https://www.kaggle.com/datasets/takbiralam/covid19-symptoms-dataset/data
 
 11/16 23:00 JST - Nhat Lieu
+【ChatGPT会話履歴】https://chat.openai.com/share/572eb233-2350-41e5-be7a-cab1e2eff6d0
 
 ​​・学習用データセットを選び、ランダムフォレストという方法を使って機械学習を行いました。Jupyter Notebookを使用していますが、これはPythonの一部で、使いやすさとエラー発見のしやすさを考慮して選択しました。
 
