@@ -1,0 +1,29 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>診断アプリ</title>
+</head>
+<body>
+    <h1>症状を入力してください</h1>
+    <form method="post" action="/">
+        <label for="symptom">症状:</label>
+        <select id="symptom" name="symptom">
+            {% for symptom in symptoms_list %}
+                <option value="{{ symptom }}">{{ symptom }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="additional_symptom">追加の症状（任意）:</label>
+        <select id="additional_symptom" name="additional_symptom">
+            <option value="">選択してください</option>
+            {% for symptom in symptoms_list %}
+                <option value="{{ symptom }}">{{ symptom }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <input type="submit" value="診断">
+    </form>
+</body>
+</html>
