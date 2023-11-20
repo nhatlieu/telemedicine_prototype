@@ -1,9 +1,19 @@
 # telemedicine_prototype
 This is the 1st version of telemedicine service prototype.
 
-【学習用データセット】https://www.kaggle.com/datasets/takbiralam/covid19-symptoms-dataset/data
+
+# 11/20 21:00 JST - Nhat Lieu
+
+【学習データセット】https://www.kaggle.com/datasets/plarmuseau/sdsort?select=dia_3.csv
+
+11/16に利用した学習用データセットでは特徴量と学習データが少なすぎて、スコアは0.6を超えることさえ困難という結論に至った。
+そこで学習データを変更して、それをもとに入力された症状をもとに分類が行われ、考えられる疾患を出すものをプロトタイプとして作成した。
+
+現在は選択肢から症状を選ぶ形だが、理想は最初に気になる症状を入力し、自然言語処理を通してから考えうる疾患を予測するものにしたい。また、Flaskではなくアプリで行いたい。
 
 # 11/16 23:00 JST - Nhat Lieu
+
+【学習用データセット】https://www.kaggle.com/datasets/takbiralam/covid19-symptoms-dataset/data
 
 【ChatGPT会話履歴】https://chat.openai.com/share/572eb233-2350-41e5-be7a-cab1e2eff6d0
 
