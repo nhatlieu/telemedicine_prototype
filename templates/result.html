@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>診断結果</title>
+</head>
+<body>
+    <h1>初期診断結果</h1>
+    {% for suggestion in initial_suggestions %}
+        <p>{{ suggestion }}</p>
+    {% endfor %}
+    <h1>絞り込まれた診断結果</h1>
+    {% for suggestion in refined_suggestions %}
+        <p>{{ suggestion }}</p>
+    {% endfor %}
+    <a href="/">新しい診断を行う</a>
+</body>
+</html>
