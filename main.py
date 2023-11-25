@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 import pandas as pd
 
 app = Flask(__name__)
+app.secret_key = 'aiaiaiai'
 
 
 
@@ -44,21 +45,22 @@ def initial_diagnosis_suggestion(symptom, data, top_n=5):
     return top_diagnoses['diagnose_x'].tolist()
 
 # 診断の絞り込みを行う関数
-def refine_diagnosis(initial_diagnoses, additional_symptom, data, top_n=1):
-    # 追加の症状に基づいてフィルタリング
-    filtered_data = data[data['symptom_x'] == additional_symptom]
-    print("Filtered Data on Additional Symptom:", filtered_data)
+def refined_diagnosis_with_weights(initial_diagnoses, additional_symptom, data):
+    # 初期診断の重み付け
+    data['initial_weight'] = data['diagnose_x'].apply(lambda x: 2 if x in initial_diagnoses else 0)
 
-    # 初期診断結果に含まれる診断でフィルタリング
-    filtered_data = filtered_data[filtered_data['diagnose_x'].isin(initial_diagnoses)]
-    print("Filtered Data on Initial Diagnoses:", filtered_data)
+    # 追加症状の重み付け
+    data['additional_weight'] = data['symptom_x'].apply(lambda x: 1 if x == additional_symptom else 0)
 
-    # 絞り込まれた診断の計算
-    refined_diagnoses = filtered_data.groupby('diagnose_x')['wei'].sum().reset_index()
-    top_refined_diagnoses = refined_diagnoses.sort_values(by='wei', ascending=False).head(top_n)
-    print("Refined Diagnoses:", top_refined_diagnoses)
+    # 両方が一致する場合の重み付け
+    data['combined_weight'] = data.apply(lambda row: 3 if row['diagnose_x'] in initial_diagnoses and row['symptom_x'] == additional_symptom else 0, axis=1)
 
-    return top_refined_diagnoses['diagnose_x'].tolist()
+    # 総重みの計算
+    data['total_weight'] = data['initial_weight'] + data['additional_weight'] + data['combined_weight']
+
+    # 最終的な診断の選択
+    refined_diagnoses = data.sort_values(by='total_weight', ascending=False).head(1)
+    return refined_diagnoses['diagnose_x'].tolist()
 
 # 例：初期症状として「Back ache or pain」が選択され、追加症状として「Fever」が提供された場合の処理
 
@@ -101,8 +103,13 @@ def final_diagnosis():
     selected_symptom = request.form.get('symptom')
     additional_symptom = request.form.get('additional_symptom')
     initial_suggestions = initial_diagnosis_suggestion(selected_symptom, symptom_diagnosis_relation)
-    refined_suggestions = refine_diagnosis(initial_suggestions, additional_symptom, symptom_diagnosis_relation)
+    refined_suggestions = refined_diagnosis_with_weights(initial_suggestions, additional_symptom, symptom_diagnosis_relation)
     return render_template('final_diagnosis.html', refined_suggestions=refined_suggestions)
 
+@app.route('/switch_language/<language>')
+def switch_language(language):
+    session['language'] = language
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
