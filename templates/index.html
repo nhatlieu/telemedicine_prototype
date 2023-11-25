@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>症状選択</title>
+    <style>
+        body {
+            font-size: 16px; /* 基本的なフォントサイズ */
+        }
+    </style>
 </head>
 <body>
-    <h1>症状を入力してください</h1>
-    <form method="post" action="/initial_diagnosis">
-        <label for="symptom">症状:</label>
-        <select id="symptom" name="symptom">
-            {% for symptom in symptoms_list %}
-                <option value="{{ symptom }}">{{ symptom }}</option>
-            {% endfor %}
-        </select><br><br>
-        <input type="submit" value="次へ">
-    </form>
+    <div class="container mt-5">
+        <h1 class="text-center">症状を入力してください</h1>
+        <form method="post" action="/initial_diagnosis">
+            <div class="form-group">
+                <label for="symptom">症状:</label>
+                <select id="symptom" name="symptom" class="form-control">
+                    {% for symptom in symptoms_list %}
+                        <option value="{{ symptom }}">{{ symptom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">次へ</button>
+        </form>
+    </div>
 </body>
 </html>
