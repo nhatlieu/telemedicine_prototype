@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>初期診断結果</title>
+    <style>
+        body {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <h1>初期診断結果</h1>
-    {% for suggestion in initial_suggestions %}
-        <p>{{ suggestion }}</p>
-    {% endfor %}
-    <form method="post" action="/additional_symptom">
-        <input type="hidden" name="symptom" value="{{ symptom }}">
-        <input type="submit" value="追加症状の入力">
-    </form>
+    <div class="container mt-5">
+        <h1 class="text-center">初期診断結果</h1>
+        <div class="list-group">
+            {% for suggestion in initial_suggestions %}
+                <a href="#" class="list-group-item list-group-item-action">{{ suggestion }}</a>
+            {% endfor %}
+        </div>
+        <form method="post" action="/additional_symptom" class="mt-4">
+            <input type="hidden" name="symptom" value="{{ symptom }}">
+            <button class="btn btn-info btn-block">追加症状の入力</button>
+        </form>
+    </div>
 </body>
 </html>
