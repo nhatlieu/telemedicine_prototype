@@ -1,20 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>追加の症状を選択</title>
+    <style>
+        body {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <h1>追加の症状を選択してください</h1>
-    <form method="post" action="/final_diagnosis">
-        <input type="hidden" name="initial_symptom" value="{{ selected_symptom }}">
-        <label for="additional_symptom">追加の症状:</label>
-        <select id="additional_symptom" name="additional_symptom">
-            <option value="">選択してください</option>
-            {% for symptom in symptoms_list %}
-                <option value="{{ symptom }}">{{ symptom }}</option>
-            {% endfor %}
-        </select><br><br>
-        <input type="submit" value="絞り込まれた診断結果を表示">
-    </form>
+    <div class="container mt-5">
+        <h1 class="text-center">追加の症状を選択してください</h1>
+        <form method="post" action="/final_diagnosis">
+            <input type="hidden" name="initial_symptom" value="{{ selected_symptom }}">
+            <div class="form-group">
+                <label for="additional_symptom">追加の症状:</label>
+                <select id="additional_symptom" name="additional_symptom" class="form-control">
+                    <option value="">選択してください</option>
+                    {% for symptom in symptoms_list %}
+                        <option value="{{ symptom }}">{{ symptom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">絞り込まれた診断結果を表示</button>
+        </form>
+    </div>
 </body>
 </html>
