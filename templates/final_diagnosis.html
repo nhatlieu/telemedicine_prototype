@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>絞り込まれた診断結果</title>
+    <style>
+        body {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <h1>絞り込まれた診断結果</h1>
-    {% for suggestion in refined_suggestions %}
-        <p>{{ suggestion }}</p>
-    {% endfor %}
-    <a href="/">新しい診断を行う</a>
+    <div class="container mt-5">
+        <h1 class="text-center">絞り込まれた診断結果</h1>
+        <div class="list-group">
+            {% for suggestion in refined_suggestions %}
+                <a href="#" class="list-group-item list-group-item-action">{{ suggestion }}</a>
+            {% endfor %}
+        </div>
+        <a href="/" class="btn btn-primary btn-block mt-4">新しい診断を行う</a>
+    </div>
 </body>
 </html>
