@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>追加の症状を選択</title>
+</head>
+<body>
+    <h1>追加の症状を選択してください</h1>
+    <form method="post" action="/final_diagnosis">
+        <input type="hidden" name="initial_symptom" value="{{ selected_symptom }}">
+        <label for="additional_symptom">追加の症状:</label>
+        <select id="additional_symptom" name="additional_symptom">
+            <option value="">選択してください</option>
+            {% for symptom in symptoms_list %}
+                <option value="{{ symptom }}">{{ symptom }}</option>
+            {% endfor %}
+        </select><br><br>
+        <input type="submit" value="絞り込まれた診断結果を表示">
+    </form>
+</body>
+</html>

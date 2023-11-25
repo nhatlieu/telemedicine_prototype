@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>初期診断結果</title>
+</head>
+<body>
+    <h1>初期診断結果</h1>
+    {% for suggestion in initial_suggestions %}
+        <p>{{ suggestion }}</p>
+    {% endfor %}
+    <form method="post" action="/additional_symptom">
+        <input type="hidden" name="symptom" value="{{ symptom }}">
+        <input type="submit" value="追加症状の入力">
+    </form>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>症状選択</title>
+</head>
+<body>
+    <h1>症状を入力してください</h1>
+    <form method="post" action="/initial_diagnosis">
+        <label for="symptom">症状:</label>
+        <select id="symptom" name="symptom">
+            {% for symptom in symptoms_list %}
+                <option value="{{ symptom }}">{{ symptom }}</option>
+            {% endfor %}
+        </select><br><br>
+        <input type="submit" value="次へ">
+    </form>
+</body>
+</html>
