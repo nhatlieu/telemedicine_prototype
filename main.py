@@ -45,11 +45,19 @@ def initial_diagnosis_suggestion(symptom, data, top_n=5):
 
 # 診断の絞り込みを行う関数
 def refine_diagnosis(initial_diagnoses, additional_symptom, data, top_n=1):
-    """診断の絞り込みを行う関数"""
+    # 追加の症状に基づいてフィルタリング
     filtered_data = data[data['symptom_x'] == additional_symptom]
+    print("Filtered Data on Additional Symptom:", filtered_data)
+
+    # 初期診断結果に含まれる診断でフィルタリング
     filtered_data = filtered_data[filtered_data['diagnose_x'].isin(initial_diagnoses)]
+    print("Filtered Data on Initial Diagnoses:", filtered_data)
+
+    # 絞り込まれた診断の計算
     refined_diagnoses = filtered_data.groupby('diagnose_x')['wei'].sum().reset_index()
     top_refined_diagnoses = refined_diagnoses.sort_values(by='wei', ascending=False).head(top_n)
+    print("Refined Diagnoses:", top_refined_diagnoses)
+
     return top_refined_diagnoses['diagnose_x'].tolist()
 
 # 例：初期症状として「Back ache or pain」が選択され、追加症状として「Fever」が提供された場合の処理
@@ -65,25 +73,36 @@ def refine_diagnosis(initial_diagnoses, additional_symptom, data, top_n=1):
 
 # print(symptoms_df.columns)
 # print(symptoms_df.head())
+# print(symptom_diagnosis_relation)
 
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # 症状のリストを作成
-    symptoms_list = symptoms_df['symptom_x'].tolist()  # 仮の症状リスト
+    symptoms_list = symptoms_df['symptom_x'].tolist()  # 症状のリストを作成
+    return render_template('index.html', symptoms_list=symptoms_list)
 
+@app.route('/initial_diagnosis', methods=['GET', 'POST'])
+def initial_diagnosis():
+    selected_symptom = request.form.get('symptom')
+    initial_suggestions = initial_diagnosis_suggestion(selected_symptom, symptom_diagnosis_relation)
+    return render_template('initial_diagnosis.html', initial_suggestions=initial_suggestions, symptom=selected_symptom)
+
+@app.route('/additional_symptom', methods=['GET', 'POST'])
+def additional_symptom():
+    symptoms_list = symptoms_df['symptom_x'].tolist()
     if request.method == 'POST':
         selected_symptom = request.form.get('symptom')
-        additional_symptom = request.form.get('additional_symptom')
-        
-        initial_suggestions = initial_diagnosis_suggestion(selected_symptom, symptom_diagnosis_relation)
-        refined_suggestions = refine_diagnosis(initial_suggestions, additional_symptom, symptom_diagnosis_relation)
-        
-        return render_template('result.html', initial_suggestions=initial_suggestions, refined_suggestions=refined_suggestions)
+        return render_template('additional_symptom.html', symptoms_list=symptoms_list, selected_symptom=selected_symptom)
+    return render_template('additional_symptom.html', symptoms_list=symptoms_list)
 
-    # 症状リストをテンプレートに渡す
-    return render_template('index.html', symptoms_list=symptoms_list)
+@app.route('/final_diagnosis', methods=['GET', 'POST'])
+def final_diagnosis():
+    selected_symptom = request.form.get('symptom')
+    additional_symptom = request.form.get('additional_symptom')
+    initial_suggestions = initial_diagnosis_suggestion(selected_symptom, symptom_diagnosis_relation)
+    refined_suggestions = refine_diagnosis(initial_suggestions, additional_symptom, symptom_diagnosis_relation)
+    return render_template('final_diagnosis.html', refined_suggestions=refined_suggestions)
 
 if __name__ == '__main__':
     app.run(debug=True)
