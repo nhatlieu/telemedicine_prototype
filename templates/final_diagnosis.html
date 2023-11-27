@@ -6,20 +6,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>絞り込まれた診断結果</title>
     <style>
-        body {
-            font-size: 16px;
-        }
+        body { font-size: 16px; }
     </style>
 </head>
 <body>
+    <div class="container mt-3">
+        <div class="d-flex justify-content-end">
+            <a href="{{ url_for('switch_language', language='en') }}" class="btn btn-link">English</a>
+            <a href="{{ url_for('switch_language', language='ja') }}" class="btn btn-link">日本語</a>
+        </div>
+    </div>
     <div class="container mt-5">
-        <h1 class="text-center">絞り込まれた診断結果</h1>
+        <h1 class="text-center">{{ lang_data.final_diagnosis_title }}</h1>
         <div class="list-group">
             {% for suggestion in refined_suggestions %}
                 <a href="#" class="list-group-item list-group-item-action">{{ suggestion }}</a>
             {% endfor %}
         </div>
-        <a href="/" class="btn btn-primary btn-block mt-4">新しい診断を行う</a>
+        <a href="/" class="btn btn-primary btn-block mt-4">{{ lang_data.new_diagnosis_button }}</a>
     </div>
 </body>
 </html>
