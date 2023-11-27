@@ -1,6 +1,13 @@
 # telemedicine_prototype
 This is the 1st version of telemedicine service prototype.
 
+# 11/27 6:45 EET - Nhat Lieu
+
+【学習データセット】https://www.kaggle.com/datasets/plarmuseau/sdsort?select=dia_3.csv
+
+11/20のデータから、UIの向上と操作性を向上させた。
+フィルタリングのアルゴリズムも一致するものを選択するのではなく、重みを用いて可能性が高いものを表示するようにした。
+
 
 # 11/20 21:00 JST - Nhat Lieu
 
