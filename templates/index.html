@@ -6,24 +6,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>症状選択</title>
     <style>
-        body {
-            font-size: 16px; /* 基本的なフォントサイズ */
-        }
+        body { font-size: 16px; }
     </style>
 </head>
 <body>
+    <div class="container mt-3">
+        <div class="d-flex justify-content-end">
+            <a href="{{ url_for('switch_language', language='en') }}" class="btn btn-link">English</a>
+            <a href="{{ url_for('switch_language', language='ja') }}" class="btn btn-link">日本語</a>
+        </div>
+    </div>
     <div class="container mt-5">
-        <h1 class="text-center">症状を入力してください</h1>
+        <h1 class="text-center">{{ lang_data.title }}</h1>
         <form method="post" action="/initial_diagnosis">
             <div class="form-group">
-                <label for="symptom">症状:</label>
+                <label for="symptom">{{ lang_data.symptom }}</label>
                 <select id="symptom" name="symptom" class="form-control">
                     {% for symptom in symptoms_list %}
                         <option value="{{ symptom }}">{{ symptom }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">次へ</button>
+            <button type="submit" class="btn btn-primary btn-block">{{ lang_data.next_button }}</button>
         </form>
     </div>
 </body>
