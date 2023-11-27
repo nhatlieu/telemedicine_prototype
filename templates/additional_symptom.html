@@ -6,26 +6,30 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>追加の症状を選択</title>
     <style>
-        body {
-            font-size: 16px;
-        }
+        body { font-size: 16px; }
     </style>
 </head>
 <body>
+    <div class="container mt-3">
+        <div class="d-flex justify-content-end">
+            <a href="{{ url_for('switch_language', language='en') }}" class="btn btn-link">English</a>
+            <a href="{{ url_for('switch_language', language='ja') }}" class="btn btn-link">日本語</a>
+        </div>
+    </div>
     <div class="container mt-5">
-        <h1 class="text-center">追加の症状を選択してください</h1>
+        <h1 class="text-center">{{ lang_data.additional_symptom_title }}</h1>
         <form method="post" action="/final_diagnosis">
             <input type="hidden" name="initial_symptom" value="{{ selected_symptom }}">
             <div class="form-group">
-                <label for="additional_symptom">追加の症状:</label>
+                <label for="additional_symptom">{{ lang_data.additional_symptom_label }}</label>
                 <select id="additional_symptom" name="additional_symptom" class="form-control">
-                    <option value="">選択してください</option>
+                    <option value="">{{ lang_data.select_option }}</option>
                     {% for symptom in symptoms_list %}
                         <option value="{{ symptom }}">{{ symptom }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <button type="submit" class="btn btn-success btn-block">絞り込まれた診断結果を表示</button>
+            <button type="submit" class="btn btn-success btn-block">{{ lang_data.show_results_button }}</button>
         </form>
     </div>
 </body>
